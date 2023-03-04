@@ -3,12 +3,12 @@ POST http://localhost:3000/auth/signup
 content-type: application/json
 
 {
-  "email": "123@email.com",
+  "email": "unique1@email.com",
   "password": "password"
 }
 
 ### Get user by id
-GET http://localhost:3000/auth/ac77da8b-dbf5-4eae-8630-4d152b27f45b
+GET http://localhost:3000/auth/66fd5a61-16c4-4416-b6ae-8c9a102742f0	
 
 
 ### Get user list
@@ -18,7 +18,7 @@ GET http://localhost:3000/auth
 GET http://localhost:3000/auth?email=aaa@gmail.com
 
 ### Update a user
-PATCH http://localhost:3000/auth/ac77da8b-dbf5-4eae-8630-4d152b27f45b
+PATCH http://localhost:3000/auth/66fd5a61-16c4-4416-b6ae-8c9a102742f0	
 content-type: application/json
 
 {
