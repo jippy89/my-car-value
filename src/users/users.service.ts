@@ -17,6 +17,7 @@ export class UsersService {
   }
 
   async findOne(id: string) {
+    if (!id) return null
     return this.usersRepository.findOneBy({ id });
   }
 
