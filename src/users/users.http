@@ -16,6 +16,12 @@ content-type: application/json
   "password": "password"
 }
 
+### WhoAmI
+GET http://localhost:3000/auth/whoami
+
+### Sign out
+POST http://localhost:3000/auth/signout
+
 ### Get user by id
 GET http://localhost:3000/auth/66fd5a61-16c4-4416-b6ae-8c9a102742f0	
 
