@@ -1,5 +1,4 @@
 import {
-  UseInterceptors,
   NestInterceptor,
   ExecutionContext,
   CallHandler,
@@ -7,9 +6,11 @@ import {
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { plainToClass } from 'class-transformer';
-import { UserDto } from 'src/users/dtos/user.dto';
 
-export class ClassSerializerInterceptor implements NestInterceptor {
+export class TransformResponseInterceptor implements NestInterceptor {
+  constructor(private dto) {}
+
+
   intercept(context: ExecutionContext, next: CallHandler<any>):
   Observable<any> | Promise<Observable<any>>
   {
@@ -21,7 +22,7 @@ export class ClassSerializerInterceptor implements NestInterceptor {
         // Run something before the response is sent out
         // beforeResponseOut
         // console.log('beforeResponseOut', data)
-        return plainToClass(UserDto, data, {
+        return plainToClass(this.dto, data, {
           excludeExtraneousValues: true,
           // Will exclude properties that doesn't use @Exclude
         })
