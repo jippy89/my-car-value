@@ -6,3 +6,9 @@ content-type: application/json
   "email": "johndoe@email.com",
   "password": "password"
 }
+
+### Get user by id
+GET http://localhost:3000/auth/7d51dee1-078e-4def-bdaf-44dd16f3594d
+
+### Get user by their email
+GET http://localhost:3000/auth?email=johndoe@email.com
