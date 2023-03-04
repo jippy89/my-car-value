@@ -8,7 +8,22 @@ content-type: application/json
 }
 
 ### Get user by id
-GET http://localhost:3000/auth/7d51dee1-078e-4def-bdaf-44dd16f3594d
+GET http://localhost:3000/auth/ac77da8b-dbf5-4eae-8630-4d152b27f45b
+
+
+### Get user list
+GET http://localhost:3000/auth
 
 ### Get user by their email
-GET http://localhost:3000/auth?email=johndoe@email.com
+GET http://localhost:3000/auth?email=aaa@gmail.com
+
+### Update a user
+PATCH http://localhost:3000/auth/ac77da8b-dbf5-4eae-8630-4d152b27f45b
+content-type: application/json
+
+{
+  "password": "aaannn"
+}
+
+### Deeltete user by id
+DELETE http://localhost:3000/auth/7d51dee1-078e-4def-bdaf-44dd16f3594d
