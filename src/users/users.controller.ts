@@ -20,6 +20,11 @@ export class UsersController {
     return this.authenticationService.signup(body.email, body.password);
   }
 
+  @Post('/signin')
+  signin(@Body() body: CreateUserDto) {
+    return this.authenticationService.signin(body.email, body.password);
+  }
+
   @Get('/:id')
   async findUser(@Param('id') id: string) {
     console.log('handler is running')
