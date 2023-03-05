@@ -15,7 +15,7 @@ export const CurrentUser = createParamDecorator(
   (data: never, ctx: ExecutionContext) => {
     if (ctx.getType() === 'http') {
       const request = ctx.switchToHttp().getRequest();
-      return request.session.userId;
+      return request.user;
     }
   }
 );
