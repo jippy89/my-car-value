@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Get, Query, Delete, Param, Patch, NotFoundException, Session, } from '@nestjs/common';
+import { Body, Controller, Post, Get, Query, Delete, Param, Patch, NotFoundException, Session, UseGuards } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { UsersService } from './users.service';
@@ -7,6 +7,7 @@ import { UserDto } from './dtos/user.dto';
 import { AuthenticationService } from './authentication.service';
 import { CurrentUser } from './decorators/current-user.decorator';
 import { User } from './user.entity';
+import { AuthenticationGuard } from 'src/guards/authentication.guard';
 
 @Controller('auth')
 @Serialize(UserDto)
@@ -18,6 +19,7 @@ export class UsersController {
   ) {}
 
   @Get('/whoami')
+  @UseGuards(AuthenticationGuard)
   async whoAmI(@CurrentUser() user: User) {
     return user
   }
