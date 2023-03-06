@@ -64,16 +64,23 @@ describe('AuthenticationService', () => {
     // This will only change for this test
     // Since logically `beforeEach` runs every test and the `fakeUsersService`
     // will be replaced with the new variable.
-    fakeUsersService.find = () => Promise.resolve([{
-      id: 'asdfas',
-      username: 'aasdf@asd.com',
+    // fakeUsersService.find = () => Promise.resolve([{
+    //   id: 'asdfas',
+    //   username: 'aasdf@asd.com',
+    //   password: 'asdf',
+    // }])
+    
+    // Refactor, since mock is better now, we don't use above code. 
+    const userParam = {
+      email: 'aasdf@asd.com',
       password: 'asdf',
-    }])
+    }
+    await service.signup(userParam.email, userParam.password)
 
     // await expect(service.signup('aasdf@asd.com', 'asdf'))
     //   .rejects.toThrow(BadRequestException)
     // Alternatives to above
-    const expectedUserError = service.signup('aasdf@asd.com', 'asdf')
+    const expectedUserError = service.signup(userParam.email, userParam.password)
     await expect(expectedUserError)
       .rejects.toThrow(BadRequestException)
   });
