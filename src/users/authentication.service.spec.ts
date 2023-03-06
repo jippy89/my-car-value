@@ -4,9 +4,10 @@ import { UsersService } from './users.service';
 
 describe('AuthenticationService', () => {
   let service: AuthenticationService;
+  let fakeUsersService: Partial<UsersService>
 
   beforeEach(async () => {
-    const fakeUsersService: Partial<UsersService> = {
+    fakeUsersService = {
       find: () => Promise.resolve([]),
       // Notes: In the course, they modify the user entity
       // And it makes an error because they didn't implement `logUser`, etc
