@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { BadRequestException } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import { UsersService } from './users.service';
 
@@ -46,4 +47,22 @@ describe('AuthenticationService', () => {
     expect(salt).toBeDefined()
     expect(hash).toBeDefined()
   })
+
+  it('throws an error if user signs up with email that is in use', async () => {
+    // This will only change for this test
+    // Since logically `beforeEach` runs every test and the `fakeUsersService`
+    // will be replaced with the new variable.
+    fakeUsersService.find = () => Promise.resolve([{
+      id: 'asdfas',
+      username: 'aasdf@asd.com',
+      password: 'asdf',
+    }])
+
+    // await expect(service.signup('aasdf@asd.com', 'asdf'))
+    //   .rejects.toThrow(BadRequestException)
+    // Alternatives to above
+    const expectedUserError = service.signup('aasdf@asd.com', 'asdf')
+    await expect(expectedUserError)
+      .rejects.toThrow(BadRequestException)
+  });
 });
