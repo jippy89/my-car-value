@@ -71,4 +71,25 @@ describe('AuthenticationService', () => {
     await expect(expectedUserError)
       .rejects.toThrow(NotFoundException)
   });
+
+  it('throws an error if an invalid password is provided', async () => {
+    fakeUsersService.find = () => Promise.resolve([{
+      id: 'asdfas',
+      username: 'aasdf@asd.com',
+      password: 'asdf',
+    }])
+
+    const expectedUserError = service.signin('aasdf@asd.com', 'aaaa')
+    await expect(expectedUserError).rejects.toThrow()
+  })
+
+  it('returns a user if correct password is provided', async () => {
+    fakeUsersService.find = () => Promise.resolve([{
+      id: 'asdfas',
+      username: 'aasdf@asd.com',
+      password: '37e6aecc965d7300.c87c0e22216399908cfee25fbe44fbc38492c7e7ce751b8e2714cd070f6eb1ec',
+    }])
+    const user = await service.signin('aasdf@asd.com', 'asdf')
+    expect(user).toBeDefined()
+  })
 });
