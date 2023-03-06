@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { BadRequestException } from '@nestjs/common';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import { UsersService } from './users.service';
 
@@ -64,5 +64,11 @@ describe('AuthenticationService', () => {
     const expectedUserError = service.signup('aasdf@asd.com', 'asdf')
     await expect(expectedUserError)
       .rejects.toThrow(BadRequestException)
+  });
+
+  it('throws an error if signin is called with an unused email', async () => {
+    const expectedUserError = service.signin('asdf@asd.com', 'asdf')
+    await expect(expectedUserError)
+      .rejects.toThrow(NotFoundException)
   });
 });
