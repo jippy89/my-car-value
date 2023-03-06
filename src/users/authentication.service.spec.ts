@@ -2,22 +2,34 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import { UsersService } from './users.service';
+import { User } from './user.entity';
 
 describe('AuthenticationService', () => {
   let service: AuthenticationService;
   let fakeUsersService: Partial<UsersService>
 
   beforeEach(async () => {
+    const users: User[] = []
     fakeUsersService = {
-      find: () => Promise.resolve([]),
+      find: (email: string) => {
+        const filteredUsers = users.filter(user => user.username === email)
+        return Promise.resolve(filteredUsers)
+      },
       // Notes: In the course, they modify the user entity
       // And it makes an error because they didn't implement `logUser`, etc
       // But you didn't got it because you don't want to modify the user entity
       // So they create this solution instead
       // create: (email: string, password: string) =>
       //   Promise.resolve({ id: 'asdfas', username: email, password } as User),
-      create: (email: string, password: string) =>
-        Promise.resolve({ id: 'asdfas', username: email, password }),
+      create: (email: string, password: string) => {
+        const user: User = {
+          id: users.length.toString(),
+          username: email,
+          password
+        } 
+        users.push(user)
+        return Promise.resolve(user)
+      }
     }
 
     // Create testing DI Container
@@ -84,12 +96,12 @@ describe('AuthenticationService', () => {
   })
 
   it('returns a user if correct password is provided', async () => {
-    fakeUsersService.find = () => Promise.resolve([{
-      id: 'asdfas',
-      username: 'aasdf@asd.com',
-      password: '37e6aecc965d7300.c87c0e22216399908cfee25fbe44fbc38492c7e7ce751b8e2714cd070f6eb1ec',
-    }])
-    const user = await service.signin('aasdf@asd.com', 'asdf')
+    const userParam = {
+      email: 'aaasdf@asd.com',
+      password: 'asdf',
+    }
+    await service.signup(userParam.email, userParam.password)
+    const user = await service.signin(userParam.email, userParam.password)
     expect(user).toBeDefined()
   })
 });
