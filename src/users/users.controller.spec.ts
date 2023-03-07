@@ -36,7 +36,11 @@ describe('UsersController', () => {
     }
     fakeAuthenticationService = {
       // signup: () => Promise.resolve({}),
-      // signin: () => Promise.resolve({}),
+      signin: (email, password) => Promise.resolve({
+        id: userSample.id,
+        username: email,
+        password
+      }),
     }
 
     const module: TestingModule = await Test.createTestingModule({
@@ -76,6 +80,20 @@ describe('UsersController', () => {
   it('`findUser` should throw an error if user not found', async () => {
     jest.spyOn(fakeUserService, 'findOne').mockImplementation(() => Promise.resolve(null))
     await expect(controller.findUser(userSample.id)).rejects.toThrow(NotFoundException)
+  })
+
+  it('`signin` should return a user with a token', async () => {
+    jest.spyOn(fakeAuthenticationService, 'signin')
+
+    const session = {}
+    const user = await controller.signin({
+      email: userSample.username,
+      password: userSample.password
+    }, session)
+
+    expect(user.username).toEqual(userSample.username)
+    expect(session['userId']).toEqual(userSample.id)
+    expect(fakeAuthenticationService.signin).toHaveBeenCalled()
   })
 
 });
