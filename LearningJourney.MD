@@ -5,3 +5,10 @@
 
 ## Generating files
 There are way to generate file and tell the cli to put it where it should be without creating a new directory using `--flat` flag
+
+## Setup for different environment
+1. Install several dependencies first
+```
+npm i -S @nestjs/config
+```
+2. Create `.env.development` and `.env.test`
