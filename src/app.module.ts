@@ -1,10 +1,12 @@
-import { Module, ValidationPipe } from '@nestjs/common';
+import { MiddlewareConsumer, Module, ValidationPipe } from '@nestjs/common';
 import { APP_PIPE } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { ReportsModule } from './reports/reports.module';
+// Imported like this because Nest's TS setup broke `cookie-session`
+const cookieSession = require('cookie-session');
 
 // Entities
 import { User } from './users/user.entity';
@@ -25,4 +27,14 @@ import { Report } from './reports/report.entity';
     })
   }],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(
+        cookieSession({
+          keys: ['asdfasdf'],
+        })
+      )
+      .forRoutes('*');
+  }
+}
