@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
+import { setupApp } from '../setup-app';
 
 describe('Authentication System', () => {
   let app: INestApplication;
@@ -12,12 +13,15 @@ describe('Authentication System', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
+    setupApp(app)
     await app.init();
   });
 
   it('handles signup request', () => {
     const user = {
-      email: 'abc@abc.com',
+      // This is ineffective, you might have to update this every test.
+      // Probably will be changed later.
+      email: 'zzz@aaa.com',
       password: 'abc',
     }
     return request(app.getHttpServer())
@@ -28,9 +32,9 @@ describe('Authentication System', () => {
       })
       .expect(201)
       .then((res) => {
-        const { id, email } = res.body;
+        const { id, username } = res.body;
         expect(id).toBeDefined();
-        expect(email).toEqual(user.email);
+        expect(username).toEqual(user.email);
       })
   });
 });
