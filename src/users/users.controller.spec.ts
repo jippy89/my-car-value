@@ -1,15 +1,18 @@
+import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthenticationService } from './authentication.service';
+import { User } from './user.entity';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 
 describe('UsersController', () => {
   let controller: UsersController;
+  let userSample: User;
   let fakeUserService: Partial<UsersService>
   let fakeAuthenticationService: Partial<AuthenticationService>
 
   beforeEach(async () => {
-    const userSample = {
+    userSample = {
       id: '1',
       username: 'test@test.com',
       password: 'test'
@@ -53,4 +56,26 @@ describe('UsersController', () => {
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });
+
+  it('`findAllUsers` should return an array of users with a email', async () => {
+    jest.spyOn(fakeUserService, 'find')
+    const users = await controller.findAllUsers(userSample.username)
+
+    expect(users.length).toEqual(1)
+    expect(users[0].username).toEqual(userSample.username)
+    expect(fakeUserService.find).toHaveBeenCalled()
+  });
+
+  it('`findUser` should return a user with an id', async () => {
+    jest.spyOn(fakeUserService, 'findOne')
+    const user = await controller.findUser(userSample.id)
+    expect(user.username).toEqual(userSample.username)
+    expect(fakeUserService.findOne).toHaveBeenCalled()
+  });
+
+  it('`findUser` should throw an error if user not found', async () => {
+    jest.spyOn(fakeUserService, 'findOne').mockImplementation(() => Promise.resolve(null))
+    await expect(controller.findUser(userSample.id)).rejects.toThrow(NotFoundException)
+  })
+
 });
