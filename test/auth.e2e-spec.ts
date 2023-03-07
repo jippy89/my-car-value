@@ -33,4 +33,28 @@ describe('Authentication System', () => {
         expect(username).toEqual(user.email);
       })
   });
+
+  it('signup as a new user then get the currently logged in user', async () => {
+    const user = {
+      email: 'aaa@aaa.com',
+      password: 'abc',
+    }
+
+    const res = await request(app.getHttpServer())
+      .post('/auth/signup')
+      .send({
+        email: user.email,
+        password: user.password,
+      })
+      .expect(201)
+
+    const cookie = res.get('Set-Cookie');
+
+    const { body } = await request(app.getHttpServer())
+      .get('/auth/whoami')
+      .set('Cookie', cookie)
+      .expect(200)
+
+    expect(body.username).toEqual(user.email)
+  });
 });
