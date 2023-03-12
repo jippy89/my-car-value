@@ -10,7 +10,7 @@ export class Report {
   price: number;
 
   @Column()
-  make: Date;
+  make: string;
 
   @Column()
   model: string;
