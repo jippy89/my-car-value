@@ -10,6 +10,10 @@ export class User {
   @Column()
   username: string;
 
+  // Will be changed later, only done for course purposes
+  @Column({ default: true })
+  admin: boolean;
+
   @Column()
   password: string;
 
