@@ -1,3 +1,6 @@
+### Get an estimated report
+GET http://localhost:3000/reports?make=Toyota&model=Corolla&year=2015&mileage=10000&price=10000&lng=0&lat=0
+
 ### Create reports
 POST http://localhost:3000/reports
 content-type: application/json
