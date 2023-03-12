@@ -1,3 +1,4 @@
+### Create reports
 POST http://localhost:3000/reports
 content-type: application/json
 
@@ -9,4 +10,12 @@ content-type: application/json
   "lng": 0,
   "lat": 0,
   "price": 500000
+}
+
+### Update reports approval status
+PATCH http://localhost:3000/reports/2
+content-type: application/json
+
+{
+  "approved": true
 }

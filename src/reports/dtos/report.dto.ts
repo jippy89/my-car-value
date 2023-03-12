@@ -18,6 +18,8 @@ export class ReportDto {
   lat: number;
   @Expose()
   mileage: number;
+  @Expose()
+  approved: boolean;
 
   @Type(() => UserDto)
   @Expose()
