@@ -17,7 +17,9 @@
     "test:watch": "cross-env NODE_ENV=test jest --watch",
     "test:cov": "cross-env NODE_ENV=test jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "cross-env NODE_ENV=test jest --config ./test/jest-e2e.json --maxWorkers=1"
+    "test:e2e": "cross-env NODE_ENV=test jest --config ./test/jest-e2e.json --maxWorkers=1",
+    "typeorm": "npm run build && cross-env NODE_ENV=development npx typeorm -d dist/src/db/data-source.js",
+    "migration:generate": "npm run typeorm -- migration:generate"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
