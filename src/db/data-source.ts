@@ -10,7 +10,9 @@ switch (process.env.NODE_ENV) {
       type: 'sqlite',
       synchronize: true,
       database: 'db.sqlite',
-      entities: ['../**/*.entity.js'],
+      // TypeORM CLI reads from the root of the project
+      entities: ['dist/src/**/*.entity.js'],
+      migrations: ['dist/src/db/migrations/*.js'],
     })
     break
   case 'test':
