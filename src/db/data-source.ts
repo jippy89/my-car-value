@@ -8,7 +8,6 @@ switch (process.env.NODE_ENV) {
   case 'development':
     Object.assign(dataSourceOptions, {
       type: 'sqlite',
-      synchronize: true,
       database: 'db.sqlite',
       // TypeORM CLI reads from the root of the project
       entities: ['dist/src/**/*.entity.js'],
@@ -18,12 +17,21 @@ switch (process.env.NODE_ENV) {
   case 'test':
     Object.assign(dataSourceOptions, {
       type: 'sqlite',
-      synchronize: true,
       database: 'test.sqlite',
-      entities: ['../**/*.entity.ts'],
+      entities: ['src/**/*.entity.ts'],
+      migrations: ['src/db/migrations/*.ts'],
+      migrationsRun: true,
     })
     break
   case 'production':
+    Object.assign(dataSourceOptions, {
+      // type: 'postgres',
+      type: 'sqlite',
+      database: 'production.sqlite',
+      entities: ['dist/src/**/*.entity.js'],
+      migrations: ['dist/src/db/migrations/*.js'],
+      migrationsRun: true,
+    })
     break
 
   default:
