@@ -58,6 +58,16 @@ $ yarn run test:e2e
 $ yarn run test:cov
 ```
 
+## Migrations with TypeORM@0.3.x
+```bash
+# Create migrations,
+# Best practice: it should be done everytime you changed an entity.
+npm run migration:generate -- src/db/migrations/<migration-name>
+
+# Run migrations,
+npm run migration:run
+```
+
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
