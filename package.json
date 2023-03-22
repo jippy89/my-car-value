@@ -37,6 +37,7 @@
     "rxjs": "^7.2.0",
     "sqlite3": "^5.1.4",
     "typeorm": "^0.3.12",
+    "typeorm-extension": "^2.5.4",
     "util": "^0.12.5"
   },
   "devDependencies": {
