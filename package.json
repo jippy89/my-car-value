@@ -24,6 +24,7 @@
     "db:seed": "npm run build && cross-env NODE_ENV=development npx typeorm-extension seed -d dist/src/db/data-source.js"
   },
   "dependencies": {
+    "@casl/ability": "^6.3.3",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.3.1",
     "@nestjs/core": "^9.0.0",
