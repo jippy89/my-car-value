@@ -14,6 +14,7 @@ import { User } from './users/user.entity';
 import { Report } from './reports/report.entity';
 import { dataSourceOptions } from './db/data-source';
 import { RolesModule } from './roles/roles.module';
+import { CaslModule } from './casl/casl.module';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { RolesModule } from './roles/roles.module';
       envFilePath: `.env.${process.env.NODE_ENV}`
     }),
     TypeOrmModule.forRoot(dataSourceOptions),
-    UsersModule, ReportsModule, RolesModule],
+    UsersModule, ReportsModule, RolesModule, CaslModule],
   controllers: [AppController],
   providers: [AppService, {
     provide: APP_PIPE,
