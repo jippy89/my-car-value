@@ -1,3 +1,4 @@
+import { Role } from 'src/enums/roles.enum';
 import { Report } from 'src/reports/report.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
@@ -10,9 +11,9 @@ export class User {
   @Column()
   username: string;
 
-  // Will be changed later, only done for course purposes
-  @Column({ default: true })
-  admin: boolean;
+  @Column({ nullable: true })
+  // @Column({ default: 'admin' })
+  roles: string;
 
   @Column()
   password: string;
