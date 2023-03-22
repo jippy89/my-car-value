@@ -11,10 +11,6 @@ export class User {
   @Column()
   username: string;
 
-  // Will be changed later, only done for course purposes
-  @Column({ default: false })
-  admin: boolean;
-
   @Column({ nullable: true })
   // @Column({ default: 'admin' })
   roles: string;
