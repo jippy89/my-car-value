@@ -12,3 +12,9 @@ There are way to generate file and tell the cli to put it where it should be wit
 npm i -S @nestjs/config
 ```
 2. Create `.env.development` and `.env.test`
+
+---
+
+# Learning Authorization
+Learn authorization through the official documentation of NestJS.
+[Authorization](https://docs.nestjs.com/security/authorization)
