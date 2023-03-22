@@ -16,5 +16,7 @@ npm i -S @nestjs/config
 ---
 
 # Learning Authorization
-Learn authorization through the official documentation of NestJS.
+1. Learn authorization through the official documentation of NestJS using RBAC.
 [Authorization](https://docs.nestjs.com/security/authorization)
+
+2. The continuation of above, but implementing ABAC with `casl`
