@@ -7,6 +7,7 @@ const dataSourceOptions: Partial<DataSourceOptions> = {
 switch (process.env.NODE_ENV) {
   case 'development':
     Object.assign(dataSourceOptions, {
+      synchronize: true,
       type: 'sqlite',
       database: 'db.sqlite',
       // TypeORM CLI reads from the root of the project
