@@ -1,6 +1,7 @@
 import { DataSourceOptions, DataSource } from "typeorm"
+import { SeederOptions } from "typeorm-extension"
 
-const dataSourceOptions: Partial<DataSourceOptions> = {
+const dataSourceOptions: Partial<DataSourceOptions> & SeederOptions = {
   synchronize: false,
 }
 
@@ -13,6 +14,10 @@ switch (process.env.NODE_ENV) {
       // TypeORM CLI reads from the root of the project
       entities: ['dist/src/**/*.entity.js'],
       migrations: ['dist/src/db/migrations/*.js'],
+
+      // For the `typeorm-extension` package
+      seeds: ['dist/src/db/seeders/*.seeder.js'],
+      factories: ['dist/src/db/factories/*.factory.js'],
     })
     break
   case 'test':
@@ -39,7 +44,7 @@ switch (process.env.NODE_ENV) {
     throw new Error('Unknown environment')
 }
 
-const dataSource = new DataSource(dataSourceOptions as DataSourceOptions)
+const dataSource = new DataSource(dataSourceOptions as DataSourceOptions & SeederOptions)
 
 export { dataSourceOptions }
 export default dataSource
