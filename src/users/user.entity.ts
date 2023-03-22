@@ -11,7 +11,7 @@ export class User {
   username: string;
 
   // Will be changed later, only done for course purposes
-  @Column({ default: true })
+  @Column({ default: false })
   admin: boolean;
 
   @Column()
