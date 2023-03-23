@@ -20,7 +20,8 @@
     "test:e2e": "cross-env NODE_ENV=test jest --config ./test/jest-e2e.json --maxWorkers=1",
     "typeorm": "npm run build && cross-env NODE_ENV=development npx typeorm -d dist/src/db/data-source.js",
     "migration:generate": "npm run typeorm -- migration:generate",
-    "migration:run": "npm run typeorm -- migration:run"
+    "migration:run": "npm run typeorm -- migration:run",
+    "db:seed": "npm run build && cross-env NODE_ENV=development npx typeorm-extension seed -d dist/src/db/data-source.js"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -37,6 +38,7 @@
     "rxjs": "^7.2.0",
     "sqlite3": "^5.1.4",
     "typeorm": "^0.3.12",
+    "typeorm-extension": "^2.5.4",
     "util": "^0.12.5"
   },
   "devDependencies": {
