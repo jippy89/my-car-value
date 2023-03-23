@@ -13,6 +13,7 @@ const cookieSession = require('cookie-session');
 import { User } from './users/user.entity';
 import { Report } from './reports/report.entity';
 import { dataSourceOptions } from './db/data-source';
+import { RolesModule } from './roles/roles.module';
 
 @Module({
   imports: [
@@ -21,7 +22,7 @@ import { dataSourceOptions } from './db/data-source';
       envFilePath: `.env.${process.env.NODE_ENV}`
     }),
     TypeOrmModule.forRoot(dataSourceOptions),
-    UsersModule, ReportsModule],
+    UsersModule, ReportsModule, RolesModule],
   controllers: [AppController],
   providers: [AppService, {
     provide: APP_PIPE,
