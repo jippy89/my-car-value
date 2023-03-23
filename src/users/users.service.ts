@@ -22,7 +22,13 @@ export class UsersService {
   }
 
   async find(email: string) {
-    return this.usersRepository.find({ where: { username: email } });
+    const users = await this.usersRepository.find({
+      where: { username: email },
+      relations: {
+        roles: true
+      },
+    });
+    return users
   }
 
   async update(id: string, attrs: Partial<User>) {
