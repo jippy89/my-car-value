@@ -1,5 +1,11 @@
 import { Expose, Type } from "class-transformer";
-import { UserDto } from "src/users/dtos/user.dto";
+
+class ReportUserDto {
+  @Expose()
+  id: number;
+  @Expose()
+  username: string;
+}
 
 export class ReportDto {
   @Expose()
@@ -21,7 +27,7 @@ export class ReportDto {
   @Expose()
   approved: boolean;
 
-  @Type(() => UserDto)
+  @Type(() => ReportUserDto)
   @Expose()
-  user: UserDto;
+  user: ReportUserDto;
 }
