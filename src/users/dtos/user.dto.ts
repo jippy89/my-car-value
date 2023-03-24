@@ -20,13 +20,17 @@ export class UserDto {
   
   // Turn to { admin: { id: 1, name: 'admin' }, user: { id: 2, name: 'user' }
   @Transform(({ obj }) => {
-    return obj.roles.reduce((acc, role: Role) => {
-      acc[role.name] = {
-        id: role.id,
-        name: role.name
-      }
-      return acc;
-    }, {})
+    const roles = obj.roles
+    if (Array.isArray(roles)) {
+      return obj.roles.reduce((acc, role: Role) => {
+        acc[role.name] = {
+          id: role.id,
+          name: role.name
+        }
+        return acc;
+      }, {})
+    }
+    return roles
   })
   @Expose()
   roles: Record<string,UserRoleDto>;

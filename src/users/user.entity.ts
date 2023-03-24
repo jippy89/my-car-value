@@ -16,7 +16,7 @@ export class User {
 
   @ManyToMany(() => Role)
   @JoinTable()
-  roles: Role[];
+  roles: Role[] | Record<string, Role>;
 
   @OneToMany(() => Report, report => report.user)
   reports: Report[];
