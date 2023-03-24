@@ -5,7 +5,7 @@ import { Report } from "src/reports/report.entity";
 import { User } from "src/users/user.entity";
 import { Role } from "src/enums/roles.enum";
 
-type Subjects = InferSubjects<typeof Report | typeof User> | 'all';
+export type Subjects = InferSubjects<typeof Report | typeof User> | 'all';
 
 export type AppAbility = Ability<[Action, Subjects]>;
 
