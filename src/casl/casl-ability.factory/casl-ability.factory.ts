@@ -3,6 +3,7 @@ import { Injectable } from "@nestjs/common";
 import { Action } from "src/enums/actions.enum";
 import { Report } from "src/reports/report.entity";
 import { User } from "src/users/user.entity";
+import { Role } from "src/enums/roles.enum";
 
 type Subjects = InferSubjects<typeof Report | typeof User> | 'all';
 
@@ -11,7 +12,7 @@ export type AppAbility = Ability<[Action, Subjects]>;
 @Injectable()
 export class CaslAbilityFactory {
 
-  createForUser(user: User) {
+  createForCurrentUser(user: User) {
     const { can, cannot, build } = new AbilityBuilder<AppAbility>
       (Ability as AbilityClass<AppAbility>);
 
