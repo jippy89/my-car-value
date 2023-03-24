@@ -1,6 +1,6 @@
-import { Role } from 'src/enums/roles.enum';
 import { Report } from 'src/reports/report.entity';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Role } from 'src/roles/role.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany, JoinTable } from 'typeorm';
 
 @Entity()
 export class User {
@@ -11,12 +11,12 @@ export class User {
   @Column()
   username: string;
 
-  @Column({ nullable: true })
-  // @Column({ default: 'admin' })
-  roles: string;
-
   @Column()
   password: string;
+
+  @ManyToMany(() => Role)
+  @JoinTable()
+  roles: Role[] | Record<string, Role>;
 
   @OneToMany(() => Report, report => report.user)
   reports: Report[];

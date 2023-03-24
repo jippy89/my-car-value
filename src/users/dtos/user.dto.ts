@@ -1,11 +1,37 @@
 /**
  * @file Represents user's response data
  */
-import { Expose } from "class-transformer";
+import { Expose, Transform, Type } from "class-transformer";
+import { Role } from "src/roles/role.entity";
+
+class UserRoleDto {
+  @Expose()
+  id: string;
+  @Expose()
+  name: string;
+}
+
 
 export class UserDto {
   @Expose()
   id: string;
   @Expose()
   username: string;
+  
+  // Turn to { admin: { id: 1, name: 'admin' }, user: { id: 2, name: 'user' }
+  @Transform(({ obj }) => {
+    const roles = obj.roles
+    if (Array.isArray(roles)) {
+      return obj.roles.reduce((acc, role: Role) => {
+        acc[role.name] = {
+          id: role.id,
+          name: role.name
+        }
+        return acc;
+      }, {})
+    }
+    return roles
+  })
+  @Expose()
+  roles: Record<string,UserRoleDto>;
 }

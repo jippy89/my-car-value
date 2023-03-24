@@ -1,28 +1,46 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { FindOptionsWhere, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
+import { RolesService } from 'src/roles/roles.service';
+import { Role } from 'src/roles/role.entity';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User) // Used to help DI, because DI doesn't read generics well
-    private usersRepository: Repository<User>, 
+    private usersRepository: Repository<User>,
+    private rolesService: RolesService,
   ) {}
 
   async create(email: string, password: string) {
-    const user = this.usersRepository.create({ username: email, password });
+    const defaultRole = await this.rolesService.findOneByName('user');
+    const user = this.usersRepository.create({
+      username: email,
+      password,
+      roles: [defaultRole],
+    });
     await this.usersRepository.save(user);
     return user;
   }
 
   async findOne(id: string) {
     if (!id) return null
-    return this.usersRepository.findOneBy({ id });
+    const user = await this.usersRepository.findOne({
+      where: { id },
+      relations: ['roles'],
+    })
+    return user
   }
 
   async find(email: string) {
-    return this.usersRepository.find({ where: { username: email } });
+    const users = await this.usersRepository.find({
+      where: { username: email },
+      relations: {
+        roles: true
+      },
+    });
+    return users
   }
 
   async update(id: string, attrs: Partial<User>) {
