@@ -7,9 +7,10 @@ import { ReportDto } from './dtos/report.dto';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { ApproveReportDto } from './dtos/approve-report.dto';
 import { GetEstimateDto } from './dtos/get-estimate.dto';
-import { Roles } from 'src/decorators/roles.decorator';
-import { Role } from 'src/enums/roles.enum';
-import { RolesGuard } from 'src/guards/roles.guard';
+import { PermissionsGuard } from 'src/guards/permissions.guard';
+import { Permission } from 'src/decorators/permissions.decorator';
+import { Action } from 'src/enums/actions.enum';
+import { Report } from './report.entity';
 
 @Controller('reports')
 export class ReportsController {
@@ -28,8 +29,8 @@ export class ReportsController {
   }
 
   @Patch('/:id')
-  @Roles(Role.Admin)
-  @UseGuards(RolesGuard)
+  @Permission(Action.Approve, Report)
+  @UseGuards(PermissionsGuard)
   approveReport(@Param('id') id: number, @Body() body: ApproveReportDto) {
     return this.reportsService.changeApproval(id, body.approved);
   }
