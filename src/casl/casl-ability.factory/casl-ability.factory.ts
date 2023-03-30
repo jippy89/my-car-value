@@ -1,4 +1,4 @@
-import { Ability, AbilityBuilder, AbilityClass, ExtractSubjectType, InferSubjects, defineAbility } from "@casl/ability";
+import { AbilityBuilder, ExtractSubjectType, InferSubjects, MongoAbility, createMongoAbility } from "@casl/ability";
 import { Injectable } from "@nestjs/common";
 import { Action } from "src/enums/actions.enum";
 import { Report } from "src/reports/report.entity";
@@ -7,14 +7,14 @@ import { Role } from "src/enums/roles.enum";
 
 export type Subjects = InferSubjects<typeof Report | typeof User> | 'all';
 
-export type AppAbility = Ability<[Action, Subjects]>;
+export type AppAbility = MongoAbility<[Action, Subjects]>;
 
 @Injectable()
 export class CaslAbilityFactory {
 
   createForCurrentUser(user: User) {
     const { can, cannot, build } = new AbilityBuilder<AppAbility>
-      (Ability as AbilityClass<AppAbility>);
+      (createMongoAbility);
 
     if (!user.roles) can(Action.Read, 'all')
 
